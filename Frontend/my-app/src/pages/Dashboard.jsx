@@ -1,49 +1,72 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Dashboard.css';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import Card from '../components/ui/Card';
+import { Download, Share2, Bot } from 'lucide-react';
+
+// Components
+import StatCard from '../components/dashboard/StatCard';
+import EngagementChart from '../components/dashboard/EngagementChart';
+import PostPerformance from '../components/dashboard/PostPerformance';
+import HeatMap from '../components/dashboard/HeatMap';
+import TopPostsTable from '../components/dashboard/TopPostsTable';
+import AnomalyAlert from '../components/dashboard/AnomalyAlert';
+
+// Data
+import { mockDashboardData } from '../data/mockData';
 
 const Dashboard = () => {
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    // Fetch logic will go here
-    const mockData = [
-      { name: 'Mon', engagement: 400 },
-      { name: 'Tue', engagement: 700 },
-      { name: 'Wed', engagement: 1200 },
-      { name: 'Thu', engagement: 900 },
-    ];
-    setData(mockData);
-  }, []);
+  const navigate = useNavigate();
+  const [data] = useState(mockDashboardData);
 
   return (
     <div className="dashboard-container">
+      {/* 1. Header / Summary Section */}
       <header className="dashboard-header">
-        <h1>Performance Overview</h1>
-        <button className="refresh-btn">Update Data</button>
+        <div>
+          <h1 style={{ marginBottom: '5px' }}>Social Analytics</h1>
+          <p style={{ color: '#94a3b8', margin: 0 }}>Welcome back, Creator! Here's what's happening today.</p>
+        </div>
+
+        <div className="header-actions">
+          <button className="action-btn outline">
+            <Download size={18} /> Export
+          </button>
+          <button className="action-btn outline">
+            <Share2 size={18} /> Share
+          </button>
+          <button className="action-btn primary" onClick={() => navigate('/assistant')}>
+            <Bot size={18} /> AI Consultant
+          </button>
+        </div>
       </header>
 
-      <div className="stats-grid">
-        <Card title="Total Reach" value="24.5k" trend="+12%" />
-        <Card title="Avg. Engagement" value="4.8%" trend="+0.5%" />
-        <Card title="Top Format" value="Reels" trend="Stable" />
-      </div>
+      {/* 6. Anomaly Detection Alerts */}
+      <section className="alerts-section">
+        <AnomalyAlert alerts={data.alerts} />
+      </section>
 
-      <div className="chart-section">
-        <h3>Engagement Trends</h3>
-        <div className="chart-wrapper">
-          <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={data}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#eee" />
-              <XAxis dataKey="name" />
-              <YAxis />
-              <Tooltip />
-              <Line type="monotone" dataKey="engagement" stroke="#8884d8" strokeWidth={3} />
-            </LineChart>
-          </ResponsiveContainer>
-        </div>
-      </div>
+      {/* 1. Header Widgets / Cards */}
+      <section className="stats-grid">
+        {data.stats.map((stat, index) => (
+          <StatCard key={index} {...stat} />
+        ))}
+      </section>
+
+      {/* Main Content Grid */}
+      <section className="main-grid">
+        {/* 2. Engagement Trends */}
+        <EngagementChart data={data.engagementHistory} />
+
+        {/* 4. Post Type Performance */}
+        <PostPerformance data={data.postPerformance} />
+
+        {/* 3. Best Time Heatmap */}
+        <HeatMap data={data.bestTimes} />
+
+        {/* 5. Top Performing Posts */}
+        <TopPostsTable posts={data.topPosts} />
+      </section>
+
     </div>
   );
 };

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-// import ChatMessage from './ChatMessage';
-// import TypingIndicator from './TypingIndicator';
-// import { useChat } from '../../hooks/useChat';
+import ChatMessage from './ChatMessage';
+import TypingIndicator from './TypingIndicator';
+import { useChat } from '../../hooks/useChat';
 import './ChatBox.css';
 
 const ChatBox = () => {
@@ -30,8 +30,8 @@ const ChatBox = () => {
                 <div ref={scrollRef} />
             </div>
             <div className="chat-input-area">
-                <input 
-                    type="text" 
+                <input
+                    type="text"
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
                     onKeyPress={(e) => e.key === 'Enter' && handleSend()}
