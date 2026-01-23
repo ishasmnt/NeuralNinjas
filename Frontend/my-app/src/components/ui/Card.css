@@ -1,0 +1,29 @@
+.stat-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-title {
+    color: #6b7280;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.card-value {
+    font-size: 1.875rem;
+    font-weight: 700;
+    margin: 0.5rem 0;
+}
+
+.card-trend {
+    font-size: 0.75rem;
+    color: #9ca3af;
+}
+
+.card-trend.positive {
+    color: #10b981;
+}

@@ -1,23 +1,51 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
+import './Dashboard.css';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import Card from '../components/ui/Card';
 
-export default function Dashboard() {
-  const [overview, setOverview] = useState(null);
+const Dashboard = () => {
+  const [data, setData] = useState([]);
 
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/analytics/overview")
-      .then(res => res.json())
-      .then(data => setOverview(data))
-      .catch(err => console.error(err));
+    // Fetch logic will go here
+    const mockData = [
+      { name: 'Mon', engagement: 400 },
+      { name: 'Tue', engagement: 700 },
+      { name: 'Wed', engagement: 1200 },
+      { name: 'Thu', engagement: 900 },
+    ];
+    setData(mockData);
   }, []);
 
-  if (!overview) return <div>Loading...</div>;
-
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">Dashboard Overview</h1>
-      <p>Total Posts: {overview.total_posts}</p>
-      <p>Average Engagement Rate: {overview.avg_engagement_rate}%</p>
-      <p>Platforms: {overview.platforms.join(", ")}</p>
+    <div className="dashboard-container">
+      <header className="dashboard-header">
+        <h1>Performance Overview</h1>
+        <button className="refresh-btn">Update Data</button>
+      </header>
+
+      <div className="stats-grid">
+        <Card title="Total Reach" value="24.5k" trend="+12%" />
+        <Card title="Avg. Engagement" value="4.8%" trend="+0.5%" />
+        <Card title="Top Format" value="Reels" trend="Stable" />
+      </div>
+
+      <div className="chart-section">
+        <h3>Engagement Trends</h3>
+        <div className="chart-wrapper">
+          <ResponsiveContainer width="100%" height={300}>
+            <LineChart data={data}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#eee" />
+              <XAxis dataKey="name" />
+              <YAxis />
+              <Tooltip />
+              <Line type="monotone" dataKey="engagement" stroke="#8884d8" strokeWidth={3} />
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
+      </div>
     </div>
   );
-}
+};
+
+export default Dashboard;

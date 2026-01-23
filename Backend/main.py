@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from routes.analytics import router as analytics_router
+from routes import analytics, ai_query, export
 
 app = FastAPI()
 
@@ -11,8 +11,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(analytics_router)
+app.include_router(analytics.router, prefix="/api/analytics")
+app.include_router(ai_query.router, prefix="/api/ai")
+app.include_router(export.router, prefix="/api/export")
 
-@app.get("/health")
-def health():
-    return {"status": "ok"}
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)

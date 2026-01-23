@@ -1,0 +1,23 @@
+.btn {
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s;
+}
+
+.btn-primary {
+    background-color: #6366f1;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #4f46e5;
+}
+
+.btn-outline {
+    background-color: transparent;
+    border: 1px solid #d1d5db;
+    color: #374151;
+}

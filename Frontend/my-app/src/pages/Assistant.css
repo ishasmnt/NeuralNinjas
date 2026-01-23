@@ -1,0 +1,18 @@
+.assistant-page {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    height: 90vh;
+}
+
+.assistant-intro {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.assistant-intro h1 {
+    color: #1f2937;
+    font-size: 2rem;
+}
