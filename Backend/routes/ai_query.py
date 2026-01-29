@@ -1,34 +1,41 @@
-# from fastapi import APIRouter
-# from pydantic import BaseModel
-# from services.gemini_service import generate_insight
-
-# router = APIRouter(prefix="/ai", tags=["AI"])
-
-# class AIQuery(BaseModel):
-#     question: str
-
-# @router.post("/ask")
-# def ask_ai(query: AIQuery):
-#     insight = generate_insight(query.question)
-#     return {
-#         "question": query.question,
-#         "answer": insight
-#     }
+# Backend/routes/ai_query.py
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
-from services.gemini_service import GeminiService
+from Backend.services.openai_service import OpenAIService
+import logging
 
-router = APIRouter()
-gemini_service = GeminiService()
+# -------------------------------
+# Set up logging to console
+# -------------------------------
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
-# Pydantic model for request body
+# Create the router without a prefix; main.py adds "/api/ai"
+router = APIRouter(tags=["AI"])
+
+# Initialize the OpenAI service
+openai_service = OpenAIService()
+
+# Request model
 class AskRequest(BaseModel):
     question: str
 
+# Route to handle AI queries
 @router.post("/ask")
 async def ask_question(request: AskRequest):
+    """
+    Endpoint to ask AI a question.
+    Expects JSON: {"question": "Your question here"}
+    Returns JSON: {"success": True, "answer": "..."}
+    """
     try:
-        answer = await gemini_service.answer_query(request.question)
+        answer = await openai_service.answer_query(request.question)
         return {"success": True, "answer": answer}
+
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        # 🔧 FIXED INDENTATION
+        logger.exception("OpenAI query failed")
+        raise HTTPException(
+            status_code=500,
+            detail=str(e)
+        )
