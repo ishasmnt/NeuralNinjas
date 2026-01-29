@@ -4,6 +4,7 @@ import TypingIndicator from './TypingIndicator';
 import { useChat } from '../../hooks/useChat';
 import './ChatBox.css';
 
+
 const ChatBox = () => {
     const [input, setInput] = useState("");
     const { messages, isTyping, sendMessage } = useChat();
