@@ -37,12 +37,14 @@ const Auth = () => {
       if (isLogin) {
         // LOGIN
         await signInWithEmailAndPassword(auth, email, password);
+
+        
       } else {
         // SIGNUP
         await createUserWithEmailAndPassword(auth, email, password);
       }
 
-      navigate("/dashboard");
+      navigate("/onboarding");
     } catch (err) {
       setError(err.message.replace("Firebase:", ""));
     } finally {

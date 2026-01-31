@@ -5,7 +5,7 @@ import Dashboard from "./pages/Dashboard";
 import Assistant from "./pages/Assistant";
 import Landing from "./pages/Landing";
 import Auth from "./pages/Auth";   // ✅ ADD THIS LINE
-
+import Onboarding from "./pages/Onboarding";
 import "./App.css";
 
 
@@ -19,6 +19,7 @@ function App() {
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/assistant" element={<Assistant />} />
             <Route path="/auth" element={<Auth />} />
+            <Route path="/onboarding" element={<Onboarding />} />
           </Routes>
         </main>
       </div>

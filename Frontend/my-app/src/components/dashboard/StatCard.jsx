@@ -1,50 +1,24 @@
 import React from 'react';
-import { Users, Activity, TrendingUp, Video } from 'lucide-react';
+import { Users, Activity, TrendingUp, Video, Heart, Repeat, Smile, Rocket } from 'lucide-react';
 
-const iconMap = {
-    Users,
-    Activity,
-    TrendingUp,
-    Video
-};
+const iconMap = { Users, Activity, TrendingUp, Video, Heart, Repeat, Smile, Rocket };
 
-const StatCard = ({ title, value, trend, isPositive, icon }) => {
+const StatCard = ({ title, value, trend, icon, color }) => {
     const Icon = iconMap[icon] || Activity;
+    const isPositive = parseFloat(trend) >= 0;
 
     return (
-        <div style={{
-            background: 'rgba(255, 255, 255, 0.05)',
-            backdropFilter: 'blur(10px)',
-            borderRadius: '16px',
-            padding: '20px',
-            border: '1px solid rgba(255, 255, 255, 0.1)',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '10px'
-        }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <span style={{ color: '#aaa', fontSize: '0.9rem' }}>{title}</span>
-                <div style={{
-                    background: 'rgba(100, 108, 255, 0.2)',
-                    padding: '8px',
-                    borderRadius: '8px',
-                    color: '#646cff'
-                }}>
+        <div className="stat-card" style={{ borderLeft: `4px solid ${color}` }}>
+            <div className="stat-header">
+                <span className="stat-title">{title}</span>
+                <div className="stat-icon-bg" style={{ backgroundColor: `${color}22`, color: color }}>
                     <Icon size={20} />
                 </div>
             </div>
-
-            <div style={{ display: 'flex', alignItems: 'flex-end', gap: '10px' }}>
-                <h3 style={{ margin: 0, fontSize: '1.8rem', fontWeight: '600' }}>{value}</h3>
-                <span style={{
-                    color: isPositive ? '#4ade80' : '#f87171',
-                    fontSize: '0.9rem',
-                    paddingBottom: '4px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '4px'
-                }}>
-                    {isPositive ? '▲' : '▼'} {trend}
+            <div className="stat-body">
+                <h2 className="stat-value">{value}</h2>
+                <span className={`stat-trend ${isPositive ? 'positive' : 'negative'}`}>
+                    {isPositive ? '▲' : '▼'} {Math.abs(trend)}%
                 </span>
             </div>
         </div>
