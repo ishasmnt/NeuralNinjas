@@ -18,14 +18,16 @@
 # if __name__ == "__main__":
 #     import uvicorn
 #     uvicorn.run(app, host="0.0.0.0", port=8000)
+from dotenv import load_dotenv
+load_dotenv()  
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
-from dotenv import load_dotenv
+
 from routes import analytics, ai_query
 
 # Load environment variables
-load_dotenv()
+
 
 # 1️⃣ Create FastAPI app BEFORE including any routers
 app = FastAPI(
